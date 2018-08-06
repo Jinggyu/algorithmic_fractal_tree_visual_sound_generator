@@ -1,4 +1,4 @@
-function Compose(){
+`function Compose(){
   var tree = new Tree();
   var count = 500;
   var time = 0;
@@ -9,7 +9,7 @@ function Compose(){
     tree.show();
   }
 // Convert continuous reachedpoint data into discrete numbers and then trigger synth.
-// --------------------- not triggering every point to avoid the very fast frequency switch, which will damage this patch ------------
+// --------------------- not triggering every point to avoid the very fast frequency switch, which will kill the generator------------
 //******************************************Better solution might be required ********************************************************
   this.composeSound = function(){
     if (tree.countleaves){
