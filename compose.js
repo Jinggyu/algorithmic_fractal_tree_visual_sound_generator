@@ -1,4 +1,4 @@
-`function Compose(){
+function Compose(){
   var tree = new Tree();
   var count = 500;
   var time = 0;
