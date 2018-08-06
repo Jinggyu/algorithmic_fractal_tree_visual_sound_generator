@@ -9,7 +9,7 @@ function Compose(){
     tree.show();
   }
 // Convert continuous reachedpoint data into discrete numbers and then trigger synth.
-// --------------------- not triggering every point to avoid the very fast frequency switch, which will kill the sound ------------
+// --------------------- not triggering every point to avoid the very fast frequency switch, which will damage this patch ------------
 //******************************************Better solution might be required ********************************************************
   this.composeSound = function(){
     if (tree.countleaves){
@@ -22,10 +22,10 @@ function Compose(){
        }
      if (i!==0){
        time ++
-       if (time===10){
+       if (time===6){
          time =0;
              }
-       if (time === floor(random(1,8))){
+       if (time === floor(random(1,5))){
           this.makenotes();
              } 
           } 
@@ -36,9 +36,22 @@ function Compose(){
   // giving a osc to start
   this.toStart = function(freqstart){
     var volumes = new Tone.Volume(-24);
-    var echo = new Tone.FeedbackDelay( '1n', 0.9);
-    var OSC = new Tone.FatOscillator (freqstart, "sine", "sine").start();
-    OSC.fadeOut = "2n.";
+    var echo = new Tone.FeedbackDelay( '1n', 0.5);
+    var OSC = new Tone.Synth(
+        {oscillator : {
+  	    type : 'sine',
+        modulationType : 'square',
+        modulationIndex : 3,
+        harmonicity: 8
+            },
+        envelope : {
+  	    attack : 0.5,
+        decay : 0.1,
+        sustain: 0.4,
+        release: 4
+           }
+        })
+    OSC.triggerAttackRelease(freqstart,20);
     OSC.connect(echo);
     echo.connect(volumes);
     volumes.toMaster();
@@ -59,16 +72,47 @@ function Compose(){
      } else {
         freq = freq2;
      } 
-  // randomly use two types of sine osc sources 
+  // instruments
      var sineSynth;
-     var sineSynth1 = new Tone.FatOscillator (freq, "sine", "square");
-     var sineSynth2 = new Tone.FatOscillator (freq, "sine", "sine");
-     sineSynth2.partials = [1, 0.2, 0.01];
+     var sineSynth1 = new Tone.Synth(
+       {oscillator : {
+  	   type : 'sine',
+       modulationType : 'square',
+       modulationIndex : 3,
+       harmonicity: 3.4
+                    },
+       envelope : {
+  	   attack : 0.5,
+       decay : 0.1,
+       sustain: 0.4,
+       release: 6
+                 }
+       })
+
+   var sineSynth2 = new Tone.Synth(
+       {oscillator : {
+  	   type : 'sine',
+       modulationType : 'sine',
+       modulationIndex : 3,
+       harmonicity: 6
+                     },
+       envelope : {
+  	   attack : 0.5,
+       decay : 0.1,
+       sustain: 0.4,
+       release: 6
+                  }
+       })
+
+     sineSynth1.triggerAttackRelease(freq,20);
+     sineSynth2.triggerAttackRelease(freq,25);
+   
+   // randomly use two types of sine osc sources  
      var synthC = floor(random(0,2));
      if (synthC ===0){
-        sineSynth = sineSynth1.start();
+        sineSynth = sineSynth1;
      } else {
-       sineSynth = sineSynth2.start();
+       sineSynth = sineSynth2;
      }
   // set pan according to x value
      var leftPanner = new Tone.Panner( -0.5 );
@@ -79,7 +123,7 @@ function Compose(){
      } else{sineSynth.connect(rightPanner);}
   
    
-     var echo2 = new Tone.FeedbackDelay( '1n', 0.7 );
+     var echo2 = new Tone.FeedbackDelay( '6n', 0.7 );
      
      var reverb2 = new Tone.Freeverb();
      reverb2.dampening.value = 50;
@@ -97,7 +141,8 @@ function Compose(){
      } else {
      echo2.connect(masterVolume);
      }
-     masterVolume.fadeOut = "4n";
+     //masterVolume.fadeOut = "4n";
      masterVolume.toMaster();
-  }  
+  }
+  
 }
