@@ -48,10 +48,10 @@ function Compose(){
   	    attack : 0.5,
         decay : 0.1,
         sustain: 0.4,
-        release: 4
+        release: 10
            }
         })
-    OSC.triggerAttackRelease(freqstart,20);
+    OSC.triggerAttackRelease(freqstart,40);
     OSC.connect(echo);
     echo.connect(volumes);
     volumes.toMaster();
@@ -85,7 +85,7 @@ function Compose(){
   	   attack : 0.5,
        decay : 0.1,
        sustain: 0.4,
-       release: 6
+       release: 10
                  }
        })
 
@@ -100,12 +100,12 @@ function Compose(){
   	   attack : 0.5,
        decay : 0.1,
        sustain: 0.4,
-       release: 6
+       release: 10
                   }
        })
 
-     sineSynth1.triggerAttackRelease(freq,20);
-     sineSynth2.triggerAttackRelease(freq,25);
+     sineSynth1.triggerAttackRelease(freq,40);
+     sineSynth2.triggerAttackRelease(freq,45);
    
    // randomly use two types of sine osc sources  
      var synthC = floor(random(0,2));
