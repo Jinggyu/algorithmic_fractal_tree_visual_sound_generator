@@ -36,7 +36,7 @@ function Compose(){
   // giving a osc to start
   this.toStart = function(freqstart){
     var volumes = new Tone.Volume(-24);
-    var echo = new Tone.FeedbackDelay( '1n', 0.4);
+    var echo = new Tone.FeedbackDelay( '1n', 0.9);
     var OSC = new Tone.FatOscillator (freqstart, "sine", "sine").start();
     OSC.fadeOut = "2n.";
     OSC.connect(echo);
@@ -79,7 +79,7 @@ function Compose(){
      } else{sineSynth.connect(rightPanner);}
   
    
-     var echo2 = new Tone.FeedbackDelay( '1n', 0.4 );
+     var echo2 = new Tone.FeedbackDelay( '1n', 0.7 );
      
      var reverb2 = new Tone.Freeverb();
      reverb2.dampening.value = 50;
