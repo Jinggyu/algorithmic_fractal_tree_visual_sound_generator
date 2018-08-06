@@ -9,7 +9,7 @@ function Compose(){
     tree.show();
   }
 // Convert continuous reachedpoint data into discrete numbers and then trigger synth.
-// --------------------- not triggering every point to avoid the very fast frequency switch, which will damage this patch ------------
+// --------------------- not triggering every point to avoid the very fast frequency switch, which will kill the sound ------------
 //******************************************Better solution might be required ********************************************************
   this.composeSound = function(){
     if (tree.countleaves){
@@ -38,6 +38,7 @@ function Compose(){
     var volumes = new Tone.Volume(-24);
     var echo = new Tone.FeedbackDelay( '1n', 0.9);
     var OSC = new Tone.FatOscillator (freqstart, "sine", "sine").start();
+    OSC.fadeOut = "2n.";
     OSC.connect(echo);
     echo.connect(volumes);
     volumes.toMaster();
@@ -96,8 +97,7 @@ function Compose(){
      } else {
      echo2.connect(masterVolume);
      }
-     
+     masterVolume.fadeOut = "4n";
      masterVolume.toMaster();
-  }
-  
+  }  
 }
