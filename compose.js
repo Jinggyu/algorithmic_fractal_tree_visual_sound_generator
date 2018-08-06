@@ -36,7 +36,7 @@ function Compose(){
   // giving a osc to start
   this.toStart = function(freqstart){
     var volumes = new Tone.Volume(-24);
-    var echo = new Tone.FeedbackDelay({delayTime: 5, feedback: 0.5});
+    var echo = new Tone.FeedbackDelay( '1n', 0.9);
     var OSC = new Tone.FatOscillator (freqstart, "sine", "sine").start();
     OSC.fadeOut = "2n.";
     OSC.connect(echo);
